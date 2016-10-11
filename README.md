@@ -1,7 +1,21 @@
 # EQuS Workshop on Python for Quantum Information Science #
-**November 17 & 18, 2016**
+**November 17 & 18, 2016** (tentative)
 
 Two-day workshop as an introduction to Python for scientific computing.
+
+## Draft Schedule ##
+
+| | Thursday | Friday |
+|---|---|---|
+| 9am to 10:30am | Basics of Scientific Computing | Data Analysis w/ QInfer |
+| 10:30am to 11am | Coffee | Coffee |
+| 11m to 12:30pm | Basics of Scientific Computing | Open Systems w/ QuTiP |
+| 12:30pm to 1:30pm | Lunch | Lunch |
+| 1:30pm to 3:00pm | Basics of Python | Instrument Control |
+| 3:00pm to 3:30pm | Coffee | Coffee |
+| 3:30pm to 5:00pm | Python for Scientific Computing | Interoperability |
+| 5:00pm– | | Post-workshop social gathering |
+
 
 ## Draft Outline ##
 
