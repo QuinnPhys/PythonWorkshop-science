@@ -30,3 +30,13 @@ NOW you have a SSH key
 - May need to install some developer junk on OS X for git (redo previous step after)
 - type “yes” if not worried about authenticity of host
 - NOW REPO is cloned to local
+
+## GIT COMMANDS ##
+To be executed from the command line
+- ``git status`` status of modified files within local repository
+- ``git pull`` pulls remote commit (repository) to local
+In order to push local commit (repository) to remote, one must first add modified files to the "staging area."
+- ``git add <file>`` add file to staging area
+- ``git commit -m "description_of_changes"`` to commit (update local repository)
+- ``git push`` to push local commit (repository) to remote
+- ``git push`` pushes local commit (repository) to remote
