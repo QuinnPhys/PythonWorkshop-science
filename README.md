@@ -1,4 +1,4 @@
-# Workshop on Python in Quantum Information Science #
+# EQuS Workshop on Python for Quantum Information Science #
 **November 17 & 18, 2016**
 
 Two-day workshop as an introduction to Python for scientific computing.
