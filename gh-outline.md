@@ -12,7 +12,7 @@
 - save in default key
 - enter passphrase
 NOW you have a SSH key
-- to verify “ls ~/.ssh” should see two files (private and public key)
+- to verify ``ls ~/.ssh`` should see two files (private and public key)
 
 ## RETURN TO GITUB ##
 - settings
