@@ -34,3 +34,22 @@ Two-day workshop as an introduction to Python for scientific computing.
 - **Open Systems Simulation with QuTiP**
 - **Instrument Control with InstrumentKit**
 - **Interoperability with Modern and Legacy Environments**
+
+
+## Before the Workshop ##
+
+- Please register **link coming soon**
+- Please help us save time by downloading the following files, depending on your operating system. **links coming soon**
+    - Windows 7 or later
+        - Anaconda 4 for Python 2.7
+        - Sublime Text
+        - VS Code
+    - OS X
+        - Anaconda 4 for Python 3.5
+        - Sublime Text
+        - VS Code
+    - Linux
+        - Anaconda 4 for Python 3.5
+        - Sublime Text
+        - VS Code
+
