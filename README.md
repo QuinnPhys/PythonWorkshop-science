@@ -21,7 +21,7 @@ Two-day workshop as an introduction to Python for scientific computing.
 
 ### Thursday ###
 
-- **Basics of Scientific Computing**
+- [**Basics of Scientific Computing**](https://nbviewer.jupyter.org/github/QuinnPhys/PythonWorkshop-science/blob/master/lecture-0-basics-scicomp.ipynb)
     - Using the command line (PowerShell and bash)
     - Secure shell (SSH) for remote and HPC computing
     - Version control with Git
@@ -29,7 +29,7 @@ Two-day workshop as an introduction to Python for scientific computing.
     - Using modern text editors
     - Installing Python and additional packages
 
-- **Basics of Python**
+- [**Basics of Python**](https://nbviewer.jupyter.org/github/QuinnPhys/PythonWorkshop-science/blob/master/lecture-1-python-basics.ipynb)
     - Introduction to the Python language
     - Python 2 vs. 3
     - Using the Python interactive interpreter
