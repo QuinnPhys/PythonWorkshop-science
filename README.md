@@ -27,10 +27,10 @@ Two-day workshop as an introduction to Python for scientific computing.
 
 - [**Tools for Scientific Computing 0**](https://nbviewer.jupyter.org/github/QuinnPhys/PythonWorkshop-science/blob/master/lecture-0-scicomp-tools-part0.ipynb)
     - Using the command line (PowerShell and bash)
-    - Secure shell (SSH) for remote and HPC computing
-    - Version control with Git
     - Package management for Linux and Windows
     - Using modern text editors
+    - Secure shell (SSH) for remote and HPC computing
+    - Version control with Git
     - Installing Python and additional packages
 
 - [**Tools for Scientific Computing 1**](https://nbviewer.jupyter.org/github/QuinnPhys/PythonWorkshop-science/blob/master/lecture-1-scicomp-tools-part1.ipynb)
@@ -51,7 +51,7 @@ Two-day workshop as an introduction to Python for scientific computing.
 ### Friday ###
 
 - **Data Analysis with QInfer**
-- **Open Systems Simulation with QuTiP**
+- **Open Quantum Systems Simulation with QuTiP**
 - **Instrument Control with InstrumentKit**
 - **Interoperability with Modern and Legacy Environments**
 
