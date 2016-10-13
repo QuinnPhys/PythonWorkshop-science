@@ -1,4 +1,8 @@
 # EQuS Workshop on Python for Quantum Information Science #
+
+The EQuS Workshop on Python for Quantum Information Science is dedicated to a harassment-free workshop experience for everyone. Our anti-harassment policy can be found
+[here](code-of-conduct.md).
+
 **November 17 & 18, 2016** (tentative)
 
 Two-day workshop as an introduction to Python for scientific computing.
