@@ -21,7 +21,7 @@ Two-day workshop as an introduction to Python for scientific computing.
 | 5:00pm– | | Post-workshop social gathering |
 
 
-## Draft Outline ##
+## Outline ##
 
 ### Thursday ###
 
@@ -29,18 +29,18 @@ Two-day workshop as an introduction to Python for scientific computing.
     - Using the command line (PowerShell and bash)
     - Package management for Linux and Windows
     - Using modern text editors
-    - Secure shell (SSH) for remote and HPC computing
-    - Version control with Git
     - Installing Python and additional packages
 
 - [**Tools for Scientific Computing 1**](https://nbviewer.jupyter.org/github/QuinnPhys/PythonWorkshop-science/blob/master/lecture-1-scicomp-tools-part1.ipynb)
+    - Secure shell (SSH) for remote and HPC computing
+    - Version control with Git
+   
+- [**Python for General Use**](https://nbviewer.jupyter.org/github/QuinnPhys/PythonWorkshop-science/blob/master/lecture-2-python-general.ipynb)
     - Introduction to the Python language
-    - Python 2 vs. 3
     - Using the Python interactive interpreter
+    - Python 2 vs. 3
     - Using Jupyter Notebook
     - Stylistic guidelines for keeping collaborators happy (incl. future you)
-
-- [**Python for General Use**](https://nbviewer.jupyter.org/github/QuinnPhys/PythonWorkshop-science/blob/master/lecture-2-python-general.ipynb)
 
 - [**Python for Scientific Computing**](https://nbviewer.jupyter.org/github/QuinnPhys/PythonWorkshop-science/blob/master/lecture-3-python-scicomp.ipynb)
     - NumPy/SciPy
@@ -51,10 +51,16 @@ Two-day workshop as an introduction to Python for scientific computing.
 ### Friday ###
 
 - **Data Analysis with QInfer**
-- **Open Quantum Systems Simulation with QuTiP**
-- **Instrument Control with InstrumentKit**
-- **Interoperability with Modern and Legacy Environments**
 
+- **Open Quantum Systems Simulation with QuTiP**
+
+- [**Instrument Control with InstrumentKit**](https://nbviewer.jupyter.org/github/QuinnPhys/PythonWorkshop-science/blob/master/lecture-7-python-instrument-control.ipynb)
+    - Review of unitful computation
+    - Using class inheritance to model instrument functionality
+    - Writing custom instrument drivers
+    - Unit testing to ensure correct operation
+    
+- **Interoperability with Modern and Legacy Environments**
 
 ## Before the Workshop ##
 
