@@ -7,7 +7,7 @@
 
 Two-day workshop as an introduction to Python for scientific computing.
 
-## Draft Schedule ##
+## Schedule ##
 
 | | Thursday | | Friday |
 |---|---|---|---|
@@ -78,3 +78,17 @@ Two-day workshop as an introduction to Python for scientific computing.
         - [Sublime Text 3](https://download.sublimetext.com/sublime-text_build-3126_amd64.deb)
         - [VS Code 1.6.1](https://go.microsoft.com/fwlink/?LinkID=760868)
 
+## Additional Resources ##
+
+### Blog Posts and Lecture Notes ###
+
+Below, we list some blog posts and lecture notes that may be useful as
+references, or in digging deeper into the topics presented at the EPQIS
+workshop.
+
+- SSH and Git Configuration
+    - [Using SSH Keys in Visual Studio Code on Windows](http://www.cgranade.com/blog/2016/06/06/ssh-keys-in-vscode.html)
+
+### Publicity ###
+
+- [Announcement poster](publicity/announcement-poster.pdf)
