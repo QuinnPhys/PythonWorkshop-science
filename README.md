@@ -80,6 +80,12 @@ Two-day workshop as an introduction to Python for scientific computing.
 
 ## Additional Resources ##
 
+### Technical Documentation ###
+
+- Style Guides
+    - [PEP 8](https://www.python.org/dev/peps/pep-0008/): documents how to
+      write clear and legible Python code.
+
 ### Blog Posts and Lecture Notes ###
 
 Below, we list some blog posts and lecture notes that may be useful as
