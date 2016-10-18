@@ -65,17 +65,17 @@ Two-day workshop as an introduction to Python for scientific computing.
 ## Before the Workshop ##
 
 - Please [register](https://goo.gl/forms/EbrqSk25TQOXCFJp2). Space is limited, so please register as soon as possible.
-- Please help us save time by downloading the following files, depending on your operating system. **links coming soon**
+- Please help us save time by downloading the following files, depending on your operating system.
     - Windows 7 or later
-        - Anaconda 4 for Python 2.7
-        - Sublime Text
-        - VS Code
-    - OS X
-        - Anaconda 4 for Python 3.5
-        - Sublime Text
-        - VS Code
-    - Linux
-        - Anaconda 4 for Python 3.5
-        - Sublime Text
-        - VS Code
+        - [Anaconda 4.2.0 for Python 2.7](https://repo.continuum.io/archive/Anaconda2-4.2.0-Windows-x86_64.exe)
+        - [Sublime Text 3](https://download.sublimetext.com/Sublime%20Text%20Build%203126%20x64%20Setup.exe)
+        - [VS Code 1.6](https://go.microsoft.com/fwlink/?LinkID=623230)
+    - OS X 10.7 or later
+        - [Anaconda 4 for Python 3.5](https://repo.continuum.io/archive/Anaconda3-4.2.0-MacOSX-x86_64.pkg)
+        - [Sublime Text 3](https://download.sublimetext.com/Sublime%20Text%20Build%203126.dmg)
+        - [VS Code 1.6](https://go.microsoft.com/fwlink/?LinkID=620882)
+    - Ubuntu 16.04
+        - [Anaconda 4 for Python 3.5](https://repo.continuum.io/archive/Anaconda3-4.2.0-Linux-x86_64.sh)
+        - [Sublime Text 3](https://download.sublimetext.com/sublime-text_build-3126_amd64.deb)
+        - [VS Code 1.6.1](https://go.microsoft.com/fwlink/?LinkID=760868)
 
