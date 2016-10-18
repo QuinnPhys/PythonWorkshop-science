@@ -9,17 +9,16 @@ Two-day workshop as an introduction to Python for scientific computing.
 
 ## Draft Schedule ##
 
-| | Thursday | Friday |
-|---|---|---|
-| 9am to 10:30am | Tools for Scientific Computing 0 | Data Analysis w/ QInfer |
-| 10:30am to 11am | Coffee | Coffee |
-| 11m to 12:30pm | Tools for Scientific Computing 1 | Open Systems w/ QuTiP |
-| 12:30pm to 1:30pm | Lunch | Lunch |
-| 1:30pm to 3:00pm | Python for General Use | Instrument Control |
-| 3:00pm to 3:30pm | Coffee | Coffee |
-| 3:30pm to 5:00pm | Python for Scientific Computing | Interoperability |
-| 5:00pm– | | Post-workshop social gathering |
-
+| | Thursday | | Friday |
+|---|---|---|---|
+| 9am to 10:30am | Tools for Scientific Computing 0 | 9am to 10:30am | Data Analysis w/ QInfer |
+| 10:30am to 11am | Coffee | 10:30am to 11am | Coffee |
+| 11m to 12:30pm | Tools for Scientific Computing 1 | 11m to 12:30pm | Open Systems w/ QuTiP |
+| 12:30pm to 1:30pm | Lunch | 12:30pm to 1:30pm | Lunch |
+| 1:30pm to 3:00pm | Python for General Use | 1:30pm to 3:00pm | Instrument Control |
+| 3:00pm to 3:30pm | Coffee | 3:00pm to 3:15pm | Coffee |
+| 3:30pm to 5:00pm | Python for Scientific Computing | 3:15pm to 4:00pm | Interoperability |
+| | | 4:00pm– | Post-workshop social gathering |
 
 ## Outline ##
 
