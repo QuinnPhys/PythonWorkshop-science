@@ -5,7 +5,7 @@
 
 **November 17 & 18, 2016**. Please [register](https://goo.gl/forms/EbrqSk25TQOXCFJp2) in advance.
 
-Two-day workshop as an introduction to Python for scientific computing.
+Two-day workshop as an introduction to Python for scientific computing. Please bring your own computer to this event.
 
 ## Schedule ##
 
@@ -90,10 +90,13 @@ Two-day workshop as an introduction to Python for scientific computing.
 
 Below, we list some blog posts and lecture notes that may be useful as
 references, or in digging deeper into the topics presented at the EPQIS
-workshop.
+workshop. 
 
 - SSH and Git Configuration
     - [Using SSH Keys in Visual Studio Code on Windows](http://www.cgranade.com/blog/2016/06/06/ssh-keys-in-vscode.html)
+    - [Browser-based Git tutorial via GitHub](https://try.github.io/levels/1/challenges/1)
+- Python
+	- [Learning Python](https://www.codecademy.com/learn/python)
 
 ### Publicity ###
 
