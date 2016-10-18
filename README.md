@@ -96,7 +96,9 @@ workshop.
     - [Using SSH Keys in Visual Studio Code on Windows](http://www.cgranade.com/blog/2016/06/06/ssh-keys-in-vscode.html)
     - [Browser-based Git tutorial via GitHub](https://try.github.io/levels/1/challenges/1)
 - Python
-	- [Learning Python](https://www.codecademy.com/learn/python)
+    - [Learning Python](https://www.codecademy.com/learn/python)
+- Text Editors
+    - [Simple Visual Enhancements for Better Coding in Sublime Text](https://webdesign.tutsplus.com/articles/simple-visual-enhancements-for-better-coding-in-sublime-text--webdesign-18052)
 
 ### Publicity ###
 
