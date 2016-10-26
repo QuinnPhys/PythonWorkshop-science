@@ -1,3 +1,4 @@
+# FIXME: 2to3
 from __future__ import print_function, division
 
 import click
@@ -15,39 +16,82 @@ from PyQt5.QtGui import (
 from PyQt5.QtWidgets import (
     QApplication, QWidget, QDialog,
     QLabel, QProgressBar,
-    QHBoxLayout, QVBoxLayout, QMainWindow
+    QHBoxLayout, QVBoxLayout, QMainWindow,
+    QLCDNumber
 )
 
 class DemoInstrumentWindow(QMainWindow):
+    name = "EPQIS16 Demonstration Instrument"
+    communicator = None
+
     def __init__(self, parent=None):
         super(DemoInstrumentWindow, self).__init__(parent)
+        self.setWindowTitle(self.name)
 
-    def on_new_command(self, cmd=None):
-        print(cmd)
+        vbox = QVBoxLayout()
 
+        self._counts_widget = QLCDNumber()
+        vbox.addWidget(self._counts_widget)
 
-class SocketListener(QObject):
+        voltage_layout = QHBoxLayout()
+        self._voltage_label = QLabel()
+        voltage_layout.addWidget(self._voltage_label)
+        self._voltage_label.setText("0")
+        voltage_layout.addWidget(QLabel(" VOLTS"))
+        vbox.addLayout(voltage_layout)
+
+        central_widget = QWidget()
+        central_widget.setLayout(vbox)
+        self.setCentralWidget(central_widget)
+
+        self.resize(400, 100)
+
+    def on_new_command(self, cmd):
+        args = cmd.split(" ")
+
+        if args[0] == "*IDN?":
+            self.communicator.send("{}\n".format(self.name))
+        elif args[0] == "COUNTS?":
+            self.communicator.send("{}\n".format(self._counts_widget.value()))
+        elif args[0] == "VOLTS?":
+            self.communicator.send("{}\n".format(self._voltage_label.value()))
+        elif args[0] == "VOLTS":
+            # This command takes mV, but is named and displays V... tricky!
+            self._voltage_label.setText("{}".format(float(args[1]) / 1000))
+        else:
+            pass
+
+class SocketCommunicator(QObject):
     def __init__(self, connection, parent=None):
         self._connection = connection
-        super(SocketListener, self).__init__(parent)
+        super(SocketCommunicator, self).__init__(parent)
 
     new_command = pyqtSignal(str)
-    buffer = ""
+    recv_buffer = bytes()
+    send_buffer = bytes()
     running = True
+
+    def send(self, data):
+        self.send_buffer += data
+        print(self.send_buffer)
 
     def loop(self):
         while self.running:
             try:
-                self.buffer += self._connection.recv()
+                self.recv_buffer += self._connection.recv(1024)
+            except socket.timeout:
+                pass
             except socket.error as ex:
-                if ex.errno == errno.EWOULDBLOCK:
-                    pass
-                else:
+                if ex.errno != errno.EWOULDBLOCK:
                     raise
 
-            if "\n" in self.buffer:
-                cmd, self.buffer = self.buffer.split("\n", 2)
-                self.new_command.emit(cmd)
+            if bytes("\n".encode("ascii")) in self.recv_buffer:
+                cmd, self.recv_buffer = self.recv_buffer.split("\n".encode("ascii"), 2)
+                self.new_command.emit(cmd.strip())
+
+            if self.send_buffer:
+                self._connection.sendall(self.send_buffer)
+                self.send_buffer = bytes()
 
 
 ## COMMAND MAIN ##############################################################
@@ -67,23 +111,20 @@ def demo_instrument(port):
     # every time.
     # TODO: move recv() calls to their own thread that can accumulate
     #       and look for \n, etc.
-    listen_socket.setblocking(False)
+    listen_socket.settimeout(1.0)
     listen_socket.bind(('', port))
-    listen_socket.listen(1)
+    listen_socket.listen(0)
 
     # Now we cycle through and wait for a connection.
     print("Waiting for a connection from InstrumentKit on port {}...".format(port), end='')
     while True:
         try:
             connection, address = listen_socket.accept()
-        except socket.error as ex:
-            if ex.errno == errno.EWOULDBLOCK:
-                print(".", end='')
-                time.sleep(1)
-            else:
-                raise
+            break
+        except socket.timeout as ex:
+            print(".", end='')
 
-    print("InstrumentKit connected, opening instrument!")
+    print("\nInstrumentKit connected, opening instrument!")
 
 
     app = QApplication(sys.argv)
@@ -91,10 +132,14 @@ def demo_instrument(port):
     root = DemoInstrumentWindow()
 
     socket_thread = QThread()
-    socket_listener = SocketListener(connection)
-    socket_listener.moveToThread(socket_thread)
-    socket_thread.started.connect(socket_listener.loop)
-    socket_listener.new_command.connect(root.on_new_command)
+    socket_communicator = SocketCommunicator(connection)
+    socket_communicator.moveToThread(socket_thread)
+    socket_thread.started.connect(socket_communicator.loop)
+    socket_communicator.new_command.connect(root.on_new_command)
+
+    root.communicator = socket_communicator
+
+    QTimer.singleShot(0, socket_thread.start)
 
     root.show()
 
