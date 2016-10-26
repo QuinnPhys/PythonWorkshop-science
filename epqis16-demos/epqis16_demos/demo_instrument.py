@@ -46,27 +46,30 @@ class DemoInstrumentWindow(QMainWindow):
 
         self.resize(400, 100)
 
+    def send(self, fmt, *args, **kwargs):
+        self.communicator.send(fmt.format(*args, **kwargs).encode("ascii"))
+
     def on_new_command(self, cmd):
-        args = cmd.split(" ")
+        args = [arg.decode("ascii") for arg in cmd.split(" ".encode("ascii"))]
 
         if args[0] == "*IDN?":
-            self.communicator.send("{}\n".format(self.name))
+            self.send("{}\n", self.name)
         elif args[0] == "COUNTS?":
-            self.communicator.send("{}\n".format(self._counts_widget.value()))
+            self.send("{}\n", self._counts_widget.value())
         elif args[0] == "VOLTS?":
-            self.communicator.send("{}\n".format(self._voltage_label.value()))
+            self.send("{}\n", self._voltage_label.text())
         elif args[0] == "VOLTS":
             # This command takes mV, but is named and displays V... tricky!
             self._voltage_label.setText("{}".format(float(args[1]) / 1000))
         else:
-            pass
+            self.send("ERR\n")
 
 class SocketCommunicator(QObject):
     def __init__(self, connection, parent=None):
         self._connection = connection
         super(SocketCommunicator, self).__init__(parent)
 
-    new_command = pyqtSignal(str)
+    new_command = pyqtSignal(str if sys.version_info.major <= 2 else bytes)
     recv_buffer = bytes()
     send_buffer = bytes()
     running = True
@@ -89,7 +92,8 @@ class SocketCommunicator(QObject):
                 cmd, self.recv_buffer = self.recv_buffer.split("\n".encode("ascii"), 2)
                 self.new_command.emit(cmd.strip())
 
-            if self.send_buffer:
+
+            if self.send_buffer:                
                 self._connection.sendall(self.send_buffer)
                 self.send_buffer = bytes()
 
@@ -117,14 +121,23 @@ def demo_instrument(port):
 
     # Now we cycle through and wait for a connection.
     print("Waiting for a connection from InstrumentKit on port {}...".format(port), end='')
+    try:
+        sys.stdout.flush()
+    except:
+        pass
     while True:
         try:
             connection, address = listen_socket.accept()
             break
         except socket.timeout as ex:
             print(".", end='')
+            try:
+                sys.stdout.flush()
+            except:
+                pass
 
     print("\nInstrumentKit connected, opening instrument!")
+    connection.settimeout(0.2)
 
 
     app = QApplication(sys.argv)
