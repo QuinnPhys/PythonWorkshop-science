@@ -1,12 +1,14 @@
-# USING GITHUB #
+LECTURE 0 notes:
 
+
+
+# USING GITHUB #
 - Sign up for github 
 - Go to education.github.com to request free private repositories (requires email verification)
 - create repository, initialize with README, add .gitignore for python
 - to clone repository need SSH key —> 
 
 ## SSH KEY ##
-
 - open Terminal
 - “ssh-keygen”
 - save in default key
@@ -22,7 +24,6 @@ NOW you have a SSH key
 (ENTIRE key including ssh-rsa and other wireless.edu junk)
 
 ## NOW TO CLONE REPOSITORY ##
-
 - return to main github page
 - copy the clone URL
 - return to Terminal, choose location for clone (I put it on the desktop “cd Desktop”)
