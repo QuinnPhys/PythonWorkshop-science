@@ -3,7 +3,7 @@
 *The EQuS Workshop on Python for Quantum Information Science is dedicated to a harassment-free workshop experience for everyone. Our anti-harassment policy can be found
 [here](code-of-conduct.md).*
 
-**November 17 & 18, 2016**. Please [register](https://goo.gl/forms/EbrqSk25TQOXCFJp2) in advance.
+**November 17 & 18, 2016**. Due to space constraints, registration is now closed.
 
 Two-day workshop as an introduction to Python for scientific computing. Please bring your own computer to this event.
 
@@ -63,7 +63,6 @@ Two-day workshop as an introduction to Python for scientific computing. Please b
 
 ## Before the Workshop ##
 
-- Please [register](https://goo.gl/forms/EbrqSk25TQOXCFJp2). Space is limited, so please register as soon as possible.
 - Please help us save time by downloading the following files, depending on your operating system.
     - Windows 7 or later
         - [Anaconda 4.2.0 for Python 2.7](https://repo.continuum.io/archive/Anaconda2-4.2.0-Windows-x86_64.exe)
