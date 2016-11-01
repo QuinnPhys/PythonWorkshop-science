@@ -102,3 +102,7 @@ workshop.
 ### Publicity ###
 
 - [Announcement poster](publicity/announcement-poster.pdf)
+
+## Licenses and Attributions ##
+
+The [Git logo by Jason Long](https://git-scm.com/downloads/logos) is used under the Creative Commons BY 3.0 license.
