@@ -3,7 +3,7 @@
 *The EQuS Workshop on Python for Quantum Information Science is dedicated to a harassment-free workshop experience for everyone. Our anti-harassment policy can be found
 [here](code-of-conduct.md).*
 
-**November 17 & 18, 2016**. Due to space constraints, registration is now closed.
+**November 17 & 18, 2016**. Please [register](https://goo.gl/forms/EbrqSk25TQOXCFJp2) in advance.
 
 Two-day workshop as an introduction to Python for scientific computing. Please bring your own computer to this event.
 
@@ -11,13 +11,13 @@ Two-day workshop as an introduction to Python for scientific computing. Please b
 
 | | Thursday | | Friday |
 |---|---|---|---|
-| 9am to 10:30am | Tools for Scientific Computing 0 <br> *Sarah Kaiser* | 9am to 10:30am | Open Systems w/ QuTiP <br> *Chris Granade* |
+| 9am to 10:30am | Tools for Scientific Computing 0 | 9am to 10:30am | Data Analysis w/ QInfer |
 | 10:30am to 11am | Coffee | 10:30am to 11am | Coffee |
-| 11m to 12:30pm | Tools for Scientific Computing 1 <br> *Chris Granade* | 11m to 12:30pm | Data Analysis w/ QInfer <br> *Chris Ferrie* |
+| 11m to 12:30pm | Tools for Scientific Computing 1 | 11m to 12:30pm | Open Systems w/ QuTiP |
 | 12:30pm to 1:30pm | Lunch | 12:30pm to 1:30pm | Lunch |
-| 1:30pm to 3:00pm | Python for General Use <br> *Sarah Kaiser* | 1:30pm to 3:00pm | Instrument Control <br> *Sarah Kaiser* |
+| 1:30pm to 3:00pm | Python for General Use | 1:30pm to 3:00pm | Instrument Control |
 | 3:00pm to 3:30pm | Coffee | 3:00pm to 3:15pm | Coffee |
-| 3:30pm to 5:00pm | Python for Scientific Computing <br> *Yuval Sanders* | 3:15pm to 4:00pm | Interoperability <br> *Chris Grande* |
+| 3:30pm to 5:00pm | Python for Scientific Computing | 3:15pm to 4:00pm | Interoperability |
 | | | 4:00pm– | Post-workshop social gathering |
 
 ## Outline ##
@@ -45,23 +45,25 @@ Two-day workshop as an introduction to Python for scientific computing. Please b
     - NumPy/SciPy
     - Pandas
     - Matplotlib and Seaborn
+    - Unitful computing with Pint and python-quantities
 
 ### Friday ###
 
-- **Data Analysis with QInfer**
-
 - [**Open Quantum Systems Simulation with QuTiP**](https://nbviewer.jupyter.org/github/QuinnPhys/PythonWorkshop-science/blob/master/lecture-5-qutip.ipynb)
 
-- [**Instrument Control with InstrumentKit**](https://nbviewer.jupyter.org/github/QuinnPhys/PythonWorkshop-science/blob/master/lecture-6-python-instrument-control.ipynb)
-    - Unitful computing with Pint and python-quantities
+- **Data Analysis with QInfer**
+
+- [**Instrument Control with InstrumentKit**](https://nbviewer.jupyter.org/github/QuinnPhys/PythonWorkshop-science/blob/master/lecture-7-python-instrument-control.ipynb)
+    - Review of unitful computation
     - Using class inheritance to model instrument functionality
     - Writing custom instrument drivers
     - Unit testing to ensure correct operation
     
-- [**Interoperability with Modern and Legacy Environments**](https://nbviewer.jupyter.org/github/QuinnPhys/PythonWorkshop-science/blob/master/lecture-7-interoperability.ipynb)
+- **Interoperability with Modern and Legacy Environments**
 
 ## Before the Workshop ##
 
+- Please [register](https://goo.gl/forms/EbrqSk25TQOXCFJp2). Space is limited, so please register as soon as possible.
 - Please help us save time by downloading the following files, depending on your operating system.
     - Windows 7 or later
         - [Anaconda 4.2.0 for Python 2.7](https://repo.continuum.io/archive/Anaconda2-4.2.0-Windows-x86_64.exe)
@@ -78,13 +80,11 @@ Two-day workshop as an introduction to Python for scientific computing. Please b
 
 ## Additional Resources ##
 
-### Documentation ###
+### Technical Documentation ###
 
-- Style Guides and Best Practices
+- Style Guides
     - [PEP 8](https://www.python.org/dev/peps/pep-0008/): documents how to
       write clear and legible Python code.
-    - [GitHub Flow](https://guides.github.com/introduction/flow/): Suggestions and cultural practices for managing Git branches and merges.
-    - [Good Enough Practices in Scientific Computing](https://arxiv.org/abs/1609.00037): Suggestions on how to make the data you want to see in the world.
 
 ### Blog Posts and Lecture Notes ###
 
@@ -103,7 +103,3 @@ workshop.
 ### Publicity ###
 
 - [Announcement poster](publicity/announcement-poster.pdf)
-
-## Licenses and Attributions ##
-
-The [Git logo by Jason Long](https://git-scm.com/downloads/logos) is used under the Creative Commons BY 3.0 license.

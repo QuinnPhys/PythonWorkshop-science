@@ -15,7 +15,7 @@ from PyQt5.QtGui import (
 )
 from PyQt5.QtWidgets import (
     QApplication, QWidget, QDialog,
-    QLabel, QProgressBar, QCheckBox,
+    QLabel, QProgressBar,
     QHBoxLayout, QVBoxLayout, QMainWindow,
     QLCDNumber
 )
@@ -30,39 +30,21 @@ class DemoInstrumentWindow(QMainWindow):
 
         vbox = QVBoxLayout()
 
-        # self._counts_widget = QLCDNumber()
-        # vbox.addWidget(self._counts_widget)
+        self._counts_widget = QLCDNumber()
+        vbox.addWidget(self._counts_widget)
 
         voltage_layout = QHBoxLayout()
-        self._voltage_label = QLCDNumber()
+        self._voltage_label = QLabel()
         voltage_layout.addWidget(self._voltage_label)
-        # self._voltage_label.value(5)
-        voltage_layout.addWidget(QLabel("VOLTS"))
+        self._voltage_label.setText("0")
+        voltage_layout.addWidget(QLabel(" VOLTS"))
         vbox.addLayout(voltage_layout)
-
-        enable_layout = QHBoxLayout()
-        self._enable_label = QLabel()
-        self._enable_cb = QCheckBox("", self)
-        enable_layout.addWidget(self._enable_cb)
-        # self._enable_cb.toggle()
-        self._enable_cb.stateChanged.connect(self.changeEnable)
-        enable_layout.addWidget(self._enable_label)
-        self._enable_label.setText("OFF")
-        
-
-        vbox.addLayout(enable_layout)
 
         central_widget = QWidget()
         central_widget.setLayout(vbox)
         self.setCentralWidget(central_widget)
 
         self.resize(400, 100)
-
-    def changeEnable(self, state):
-        if state:
-            self._enable_label.setText("ON")
-        else:
-            self._enable_label.setText("OFF")
 
     def send(self, fmt, *args, **kwargs):
         self.communicator.send(fmt.format(*args, **kwargs).encode("ascii"))
@@ -72,21 +54,15 @@ class DemoInstrumentWindow(QMainWindow):
 
         if args[0] == "*IDN?":
             self.send("{}\n", self.name)
-        # elif args[0] == "COUNTS?":
-        #     self.send("{}\n", self._counts_widget.value())
+        elif args[0] == "COUNTS?":
+            self.send("{}\n", self._counts_widget.value())
         elif args[0] == "VOLTS?":
-            # Just so the instrument is consistant it reports in mV too.
-            self.send("{}\n", float(self._voltage_label.value()) * 1000)
+            self.send("{}\n", self._voltage_label.text())
         elif args[0] == "VOLTS":
             # This command takes mV, but is named and displays V... tricky!
-            self._voltage_label.display(float(args[1]) / 1000)
-        elif args[0] == "ENABLE?":
-            self.send("{}\n", "ON" if self._enable_cb.isChecked() else "OFF")
-        elif args[0] == "ENABLE":
-            self._enable_cb.setChecked(args[1] == "ON")
+            self._voltage_label.setText("{}".format(float(args[1]) / 1000))
         else:
             self.send("ERR\n")
-
 
 class SocketCommunicator(QObject):
     def __init__(self, connection, parent=None):
