@@ -17,7 +17,7 @@ Two-day workshop as an introduction to Python for scientific computing. Please b
 | 12:30pm to 1:30pm | Lunch | 12:30pm to 1:30pm | Lunch |
 | 1:30pm to 3:00pm | Python for General Use <br> *Sarah Kaiser* | 1:30pm to 3:00pm | Instrument Control <br> *Sarah Kaiser* |
 | 3:00pm to 3:30pm | Coffee | 3:00pm to 3:15pm | Coffee |
-| 3:30pm to 5:00pm | Python for Scientific Computing <br> *Chris Granade* | 3:15pm to 4:00pm | Interoperability <br> *Chris Grande* |
+| 3:30pm to 5:00pm | Python for Scientific Computing <br> *Yuval Sanders* | 3:15pm to 4:00pm | Interoperability <br> *Chris Grande* |
 | | | 4:00pm– | Post-workshop social gathering |
 
 ## Outline ##
