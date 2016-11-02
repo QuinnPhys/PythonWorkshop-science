@@ -59,7 +59,7 @@ Two-day workshop as an introduction to Python for scientific computing. Please b
     - Writing custom instrument drivers
     - Unit testing to ensure correct operation
     
-- **Interoperability with Modern and Legacy Environments**
+- [**Interoperability with Modern and Legacy Environments**](https://nbviewer.jupyter.org/github/QuinnPhys/PythonWorkshop-science/blob/master/lecture-7-interoperability.ipynb)
 
 ## Before the Workshop ##
 
