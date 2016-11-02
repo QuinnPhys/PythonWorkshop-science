@@ -79,11 +79,13 @@ Two-day workshop as an introduction to Python for scientific computing. Please b
 
 ## Additional Resources ##
 
-### Technical Documentation ###
+### Documentation ###
 
-- Style Guides
+- Style Guides and Best Practices
     - [PEP 8](https://www.python.org/dev/peps/pep-0008/): documents how to
       write clear and legible Python code.
+    - [GitHub Flow](https://guides.github.com/introduction/flow/): Suggestions and cultural practices for managing Git branches and merges.
+    - [Good Enough Practices in Scientific Computing](https://arxiv.org/abs/1609.00037): Suggestions on how to make the data you want to see in the world.
 
 ### Blog Posts and Lecture Notes ###
 
