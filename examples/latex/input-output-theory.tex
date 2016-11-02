@@ -1,0 +1,92 @@
+\documentclass[pra]{revtex4}
+
+\usepackage[pdftex]{graphicx}
+\usepackage{amsmath,amsfonts,amsbsy,amssymb,amsthm}
+\usepackage{mathrsfs,bbm}
+\usepackage{epstopdf}
+\usepackage{mathpazo}
+
+%%%%% My commands %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\dg}{^\dagger}
+\newcommand{\nv}{\hat{\eta}_v}
+\newcommand{\nf}{\hat{\eta}_f}
+\newcommand{\cv}{\hat{c}_v}
+\newcommand{\cf}{\hat{d}_f}
+\newcommand{\Uerr}{\hat{U}_{\rm err}}
+\newcommand{\rhosc}{\hat{\rho}_{SC}}
+
+\newcommand{\fwd}{_{\rightarrow}}
+\newcommand{\bwd}{_{\leftarrow}}
+\newcommand{\infield}{^{\rm in}}
+\newcommand{\outfield}{^{\rm out}}
+
+\newcommand{\ket}[1]{\lvert #1 \rangle}
+\newcommand{\bra}[1]{\langle #1 \rvert}
+\newcommand{\ip}[2]{\langle{#1}|{#2}\rangle}
+\newcommand{\op}[2]{\ket{#1}\bra{#2}}
+\newcommand{\expt}[1]{\langle{#1}\rangle}
+
+\newcommand{\mbf}[1]{\mathbf{#1}}
+
+\newcommand{\melement}[3]{\langle #1 \lvert #2 \rvert #3 \rangle}
+\newcommand{\Tr}[1]{\operatorname{Tr}\bigl[#1\bigr]}
+\newcommand{\Ip}[2]{\left\langle {#1},{#2} \right\rangle}
+\newcommand{\modsq}[1]{\lvert #1 \rvert^2}
+\newcommand{\normsq}[1]{\lVert #1 \rVert^2}
+\newcommand{\expect}[1]{\langle #1 \rangle}
+\newcommand{\grad}{\nabla}
+\newcommand{\partialD}[2]{\frac{\partial #1}{\partial #2}}
+\newcommand{\smallfrac}[2]{\mbox{$\frac{#1}{#2}$}}
+\newcommand{\half}{\smallfrac{1}{2}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\erf}[1]{Eq.~(\ref{#1})}
+\newcommand{\frf}[1]{Fig.~\ref{#1}}
+\newcommand{\srf}[1]{Sec.~\ref{#1}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+
+\title{Notes: Input/output theory}
+\author{Quinn van Handel}
+\noaffiliation
+\date{31 Jan 2016}
+
+\maketitle
+
+%==========%
+The connection between traditional quantum mechanical scattering theory and the input/output theory of Gardiner and Collett lies in the approximations of (i) a finite range scatterer, (ii) quasi-monochromatic fields, (iii) a linearized dispersion relation, (iv) the rotating wave approximation, and (v) the Markov approximation. These approximations are of course not independent and may follow from one another. In these notes we hope to draw the connections between the two, but further to elucidate the lingering confusion in the literature when two or more propagating modes are included.
+
+We begin with the electric field operator for a one-dimensional field, 
+	\begin{align}
+		E^{(+)}(z, t) = i\sum_{k} \sqrt{ \frac{ 2 \pi \hbar \omega_k}{V} } a_k e^{-i(\omega_k t - k z)},
+	\end{align}
+and the mode operators satisfy $[a_k, a\dg_{k'}] = \delta_{k,k'}$. The boundary conditions determine the allowed values of $k$. 
+ 
+We now express the discrete sum over wave vectors as a continuous integral over frequencies, $\sum_k = \frac{1}{\Delta k } \int d k$. In a cavity of length $L$, the mode spacing is $\Delta k = 2 \pi/L$ and the continuous-mode field operators are related to the discrete operators, $a_k = \sqrt{\Delta k} \, a(k)$. The continuous-mode electric field operator becomes
+ 	\begin{align}
+		E^{(+)}(z) & \rightarrow i\Big(\frac{L}{2 \pi} \Big) \int_{-\infty}^\infty dk \sqrt{ \frac{ 2 \pi \hbar \omega(k)}{V} } a_k e^{i k z} \\
+		   		& =  i\int_0^\infty dk \sqrt{ \frac{ \hbar \omega(k)}{A} } a(k) e^{i k z} + i\int_{-\infty}^0 dk \sqrt{ \frac{ \hbar \omega(k)}{A} } a(k) e^{i k z}  \\
+		  & =  i \int_0^\infty dk \sqrt{ \frac{ \hbar \omega(k)}{A} } a(k) e^{i k z} - i \int_{0}^\infty
+		  dk \sqrt{ \frac{ \hbar \omega(-k)}{A} } a(-k) e^{-i k z} , \label{Eq::Efield1}
+	\end{align}
+where we have used the fact that for a one-dimensional field of fixed transverse area $A$ the mode volume is $V = A L$. 
+We have explicitly divided the integral into right-propagating fields ($k>0$) and left-propagating fields ($k<0$).
+ 
+We now invoke the quasi-monochromatic approximation. The fields of interest have a well defined carrier frequency $\Omega$ and excitations lie in a band of frequencies whose spread is small compared to $\Omega$. We linearize the dispersion relation around the two wave vectors associated with the carrier frequency but propagating in opposite directions, $\pm k_{\Omega}$. This gives
+ 	\begin{align}
+		\pm k (\omega) & = \pm \big[k_\Omega + \smallfrac{1}{v_g} (\omega - \Omega) \big] \\
+		\omega(\pm k) & = \Omega \pm v_g(k \mp k_{\Omega})  \label{Eq::Dispersion}
+		%k_\pm(\omega) & = \pm \Big[ k_0 + \smallfrac{1}{v_g} \big( \Omega - \omega \big) \Big]
+	\end{align}
+We now change variables from wave vector $k$ to frequency $\omega$. Although the integrals have been put on equal footing in \erf{Eq::Efield1}, we must remember that the right- and left-propagating fields have different group velocities (differing in sign) as seen in \erf{Eq::Dispersion}. The frequency-space continuous-mode field operators must now carry an additional label, $\{\rightarrow, \leftarrow\}$, to indicate whether they're associated with right- or left-propagating fields
+	\begin{align}
+		a\fwd(\omega) =& \smallfrac{1}{\sqrt{v_g}} a(k) \\
+		a\bwd(\omega) = & \smallfrac{1}{\sqrt{v_g}} a(-k) 
+	\end{align}
+ Following Ref. \cite{} we conclude the linearization by defining $\omega = v_g k$ (giving $dk = \pm d\omega / v_g$) to get
+	\begin{align}
+		E^{(+)}(z) & =  i \int_0^\infty d \omega \sqrt{ \frac{ \hbar \omega }{v_g A} } \Big( a\fwd(\omega) e^{i k(\omega) z} + a\bwd(\omega) e^{-i k(\omega) z} \Big) + \mbox{H.c.},
+	\end{align}
+
+
+\end{document}
