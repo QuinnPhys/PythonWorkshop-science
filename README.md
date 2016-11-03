@@ -48,7 +48,7 @@ Two-day workshop as an introduction to Python for scientific computing. Please b
 
 ### Friday ###
 
-- **Data Analysis with QInfer**
+- [**Data Analysis with QInfer**](https://nbviewer.jupyter.org/github/QuinnPhys/PythonWorkshop-science/blob/master/lecture-4-qinfer.ipynb)
 
 - [**Open Quantum Systems Simulation with QuTiP**](https://nbviewer.jupyter.org/github/QuinnPhys/PythonWorkshop-science/blob/master/lecture-5-qutip.ipynb)
 
