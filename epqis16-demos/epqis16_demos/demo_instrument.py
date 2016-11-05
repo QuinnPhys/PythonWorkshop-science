@@ -121,6 +121,12 @@ class SocketCommunicator(QObject):
                 self._connection.sendall(self.send_buffer)
                 self.send_buffer = bytes()
 
+        def close(self):
+            self.thread.exit()
+            self.quit()
+            self.exit()
+
+
 
 ## COMMAND MAIN ##############################################################
 
