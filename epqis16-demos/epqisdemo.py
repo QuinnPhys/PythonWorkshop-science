@@ -9,7 +9,7 @@ Provides support for the epqis16 Demonstration Instrument.
 from __future__ import absolute_import
 from __future__ import division
 
-from enum import IntEnum
+#from enum import IntEnum
 
 import quantities as pq
 
@@ -17,21 +17,18 @@ from instruments.abstract_instruments import (
     PowerSupply,
     PowerSupplyChannel,
 )
-from instruments.abstract_instruments import Instrument
-from instruments.util_fns import assume_units, ProxyList
 
+from instruments.util_fns import assume_units, ProxyList, bool_property
+from instruments.generic_scpi import SCPIInstrument
 # CLASSES #####################################################################
 
-
-class EpqisDemo(PowerSupply, PowerSupplyChannel):
-
+class EpqisDemo(PowerSupply, SCPIInstrument):
     """
-    The EpqisDemo is a single channel DC power supply with an on/off button and display of the voltage.
-    It is written with the PyQt5 which launces a GUI on your computer and listens over a optionally 
-    specified port. By 
+    The EpqisDemo is a single channel DC power supply with an on/off button and
+    display of the voltage. It is written with the PyQt5 which launces a GUI on
+    your computer and listens over a optionally specified port.
 
-    Because it is a single channel output, this object inherits from both
-    PowerSupply and PowerSupplyChannel.
+    This object inherits from `PowerSupply`.
 
     Example usage:
 
@@ -41,9 +38,10 @@ class EpqisDemo(PowerSupply, PowerSupplyChannel):
     >>> inst.voltage = 10 * pq.V
     """
 
+    _channel_count = 4
+
     def __init__(self, filelike):
         super(EpqisDemo, self).__init__(filelike)
-        self._channel_count = 1
 
     # INNER CLASSES #
 
@@ -58,24 +56,10 @@ class EpqisDemo(PowerSupply, PowerSupplyChannel):
             is designed to be initialized by the `EpqisDemo` class.
         """
 
-        def __init__(self, parent, name, idx):
-            self._parent = parent
-            self._name = name
+        def __init__(self, idx):
             self._idx = idx + 1
 
         # COMMUNICATION METHODS #
-
-        def _format_cmd(self, cmd):
-            cmd = cmd.split(" ")
-            if len(cmd) == 1:
-                cmd = "{cmd} {idx}".format(cmd=cmd[0], idx=self._idx)
-            else:
-                cmd = "{cmd} {idx},{value}".format(
-                    cmd=cmd[0],
-                    idx=self._idx,
-                    value=cmd[1]
-                )
-            return cmd
 
         def sendcmd(self, cmd):
             """
@@ -83,10 +67,9 @@ class EpqisDemo(PowerSupply, PowerSupplyChannel):
             the command with the neccessary identifier for the channel.
 
             :param str cmd: Command that will be sent to the instrument after
-                being prefixed with the channel identifier
+                being postfixed with the channel identifier
             """
-            cmd = self._format_cmd(cmd)
-            self._hp.sendcmd(cmd)
+            self.sendcmd(cmd.format(self=self))
 
         def query(self, cmd):
             """
@@ -94,55 +77,75 @@ class EpqisDemo(PowerSupply, PowerSupplyChannel):
             the command with the neccessary identifier for the channel.
 
             :param str cmd: Command that will be sent to the instrument after
-                being prefixed with the channel identifier
+                being postfixed with the channel identifier
             :return: The result from the query
             :rtype: `str`
             """
-            cmd = self._format_cmd(cmd)
-            return self._hp.query(cmd)
+            return self.query(cmd.format(self=self))
 
         # PROPERTIES #
+        @property
+        def mode(self):
+            """
+            Gets/sets the mode for the specified channel.
+            """
+            raise NotImplementedError('This instrument does not support querying '
+                                      'or setting the output current.')
+
+        @mode.setter
+        def mode(self, newval):
+            raise NotImplementedError('This instrument does not support querying '
+                                      'or setting the output current.')
 
         @property
-        def name(self):
+        def voltage(self):
             """
-            The name of the connected instrument, as reported by the
-            standard SCPI command ``*IDN?``.
+            Gets/sets the voltage for the specified channel.
 
-            :rtype: `str`
+            Example use:
+
+            >>> import instruments as ik
+            >>> import quantities as pq
+            >>> inst = ik.generic_scpi.SCPIInstrument.open_tcpip("localhost",8042)
+            >>> inst.voltage
+                10 * pq.V
+            >>> inst.voltage = 42 * pq.mV
+
+            :type: `float`
             """
-            return self.query("*IDN?")
+            value = self.sendcmd('VOLTS? {self._idx}')
+            return assume_units(value, pq.millivolt).rescale(pq.volt)
 
-        voltage = unitful_property(
-            "VOLTS",
-            pq.volt,
-            set_fmt="{} {:.1f}",
-            output_decoration=float,
-            doc="""
-            Sets the voltage of the specified channel. 
+        @voltage.setter
+        def voltage(self, newval):
+            newval = assume_units(newval, pq.volt).rescale(pq.millivolt).magnitude
+            self.sendcmd('VOLTS {{self._idx}} {}'.format(newval))
 
-
-            :units: As specified, or assumed to be :math:`\\text{V}` otherwise.
-            :type: `float` or `~quantities.quantity.Quantity`
+        @property
+        def current(self):
             """
-        )
+            Gets/sets the current for the specified channel.
+            """
+            raise NotImplementedError('This instrument does not support querying '
+                                      'or setting the output current.')
+
+        @current.setter
+        def current(self, newval):
+            raise NotImplementedError('This instrument does not support querying '
+                                      'or setting the output current.')
 
         output = bool_property(
-            "ENABLE",
+            "ENABLE {self._idx}",
             inst_true="ON",
             inst_false="OFF",
-            set_fmt="{} {:.1f}",
             doc="""
             Sets the outputting status of the specified channel.
 
-            This is a toggle setting. True will turn on the channel output
-            while False will turn it off.
+            This is a toggle setting that can be ON or OFF. 
 
             :type: `bool`
             """
         )
-
-
 
     # ENUMS #
 
@@ -155,93 +158,54 @@ class EpqisDemo(PowerSupply, PowerSupplyChannel):
 
 
     # PROPERTIES #
-
     @property
     def channel(self):
         """
         Gets a specific channel object. The desired channel is specified like
         one would access a list.
 
-        :rtype: `HP6624a.Channel`
+        :rtype: `EpqisDemo.Channel`
 
         .. seealso::
-            `HP6624a` for example using this property.
+            `EpqisDemo` for example using this property.
         """
-        return ProxyList(self, EpqisDemo.Channel, range(self.channel_count))
+        return ProxyList(self, EpqisDemo.Channel, range(self._channel_count))
 
     @property
     def voltage(self):
         """
-        Sets the voltage. This device has a voltage range of 0V to +30V.
+        Gets/sets the voltage for all channels.
 
-        Querying the voltage is not supported by this instrument.
-
-        :units: As specified (if a `~quantities.quantity.Quantity`) or assumed
-            to be of units Volts.
-        :type: `~quantities.quantity.Quantity` with units Volt
+        :units: As specified (if a `~quantities.Quantity`) or assumed to be
+            of units Volts.
+        :type: `list` of `~quantities.quantity.Quantity` with units Volt
         """
         return [
-            self.channel[i].voltage for i in range(self.channel_count)
+            self.channel[i].voltage for i in range(self._channel_count)
         ]
 
     @voltage.setter
     def voltage(self, newval):
         if isinstance(newval, (list, tuple)):
-            if len(newval) is not self.channel_count:
+            if len(newval) is not self._channel_count:
                 raise ValueError('When specifying the voltage for all channels '
                                  'as a list or tuple, it must be of '
-                                 'length {}.'.format(self.channel_count))
-            for i in range(self.channel_count):
-                self.channel[i].voltage = newval[i]
+                                 'length {}.'.format(self._channel_count))
+            for channel, new_voltage in zip(self.channel, newval):
+                channel.voltage = new_voltage
         else:
-            for i in range(self.channel_count):
-                self.channel[i].voltage = newval
-
-        @voltage.setter
-        def voltage(self, newval):
-            newval = assume_units(newval, pq.volt).rescale(pq.millivolt).magnitude
-            self._parent.sendcmd('VOLTS {}'.format(newval))
-
-
-        @property
-        def output(self):
-            """
-            Sets the output status of the specified channel. This either enables
-            or disables the output.
-
-            Querying the output status is not supported by this instrument.
-
-            :type: `bool`
-            """
-            raise NotImplementedError('This instrument does not support '
-                                      'querying the output status.')
-
-        @output.setter
-        def output(self, newval):
-            if newval is 'ON':
-                self._parent.sendcmd('ENABLE ON')
-            else:
-                self._parent.sendcmd('ENABLE OFF')
+            for channel in self.channel:
+                channel.voltage = newval
 
     @property
-    def channel_count(self):
+    def current(self):
         """
-        Gets/sets the number of output channels available for the connected
-        power supply.
-
-        :type: `int`
+        Gets/sets the current for the specified channel.
         """
-        return self._channel_count
+        raise NotImplementedError('This instrument does not support querying '
+                                  'or setting the output current.')
 
-    @channel_count.setter
-    def channel_count(self, newval):
-        if not isinstance(newval, int):
-            raise TypeError('Channel count must be specified as an integer.')
-        if newval < 1:
-            raise ValueError('Channel count must be >=1')
-        self._channel_count = newval
-
-
-    # METHODS #
-
-  
+    @current.setter
+    def current(self, newval):
+        raise NotImplementedError('This instrument does not support querying '
+                                  'or setting the output current.')
