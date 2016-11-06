@@ -7,6 +7,9 @@ examples/latex/*.aux
 # Sublime workspace
 *.sublime-workspace
 
+# VS code settings
+.vscode
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
