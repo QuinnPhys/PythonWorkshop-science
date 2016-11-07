@@ -1,28 +1,25 @@
 # FIXME: 2to3
-from __future__ import print_function, division
+from __future__ import division, print_function
+
+import errno
+import socket
+import sys
+
+from collections import namedtuple
 
 import click
-import sys
-import socket
-import errno
-import time
-from PyQt5.QtCore import (
-    pyqtSignal, QObject, QThread, QTimer,
-    QCoreApplication, QFile
-)
-from PyQt5.QtGui import (
-    QFont
-)
-from PyQt5.QtWidgets import (
-    QApplication, QWidget, QDialog,
-    QLabel, QProgressBar, QCheckBox,
-    QHBoxLayout, QVBoxLayout, QMainWindow,
-    QLCDNumber
-)
+from PyQt4.QtCore import QCoreApplication, QFile, QObject, QThread, QTimer, pyqtSignal
+from PyQt4.QtGui import (QApplication, QCheckBox, QDialog, QFont, QHBoxLayout,
+                         QLabel, QLCDNumber, QMainWindow, QProgressBar,
+                         QVBoxLayout, QWidget)
+
+Channel = namedtuple('Channel', ['voltage', 'enable_cb', 'enable_label'])
+
 
 class DemoInstrumentWindow(QMainWindow):
     name = "EPQIS16 Demonstration Instrument"
     communicator = None
+    channels = []
 
     def __init__(self, parent=None):
         super(DemoInstrumentWindow, self).__init__(parent)
@@ -33,24 +30,32 @@ class DemoInstrumentWindow(QMainWindow):
         # self._counts_widget = QLCDNumber()
         # vbox.addWidget(self._counts_widget)
 
-        voltage_layout = QHBoxLayout()
-        self._voltage_label = QLCDNumber()
-        voltage_layout.addWidget(self._voltage_label)
-        # self._voltage_label.value(5)
-        voltage_layout.addWidget(QLabel("VOLTS"))
-        vbox.addLayout(voltage_layout)
+        for idx_channel in range(4):
 
-        enable_layout = QHBoxLayout()
-        self._enable_label = QLabel()
-        self._enable_cb = QCheckBox("", self)
-        enable_layout.addWidget(self._enable_cb)
-        # self._enable_cb.toggle()
-        self._enable_cb.stateChanged.connect(self.changeEnable)
-        enable_layout.addWidget(self._enable_label)
-        self._enable_label.setText("OFF")
-        
+            voltage_layout = QHBoxLayout()
+            voltage_label = QLCDNumber()
+            voltage_layout.addWidget(voltage_label)
+            voltage_layout.addWidget(QLabel("VOLTS"))
+            vbox.addLayout(voltage_layout)
 
-        vbox.addLayout(enable_layout)
+            enable_layout = QHBoxLayout()
+            enable_label = QLabel()
+            enable_cb = QCheckBox("", self)
+            enable_layout.addWidget(enable_cb)
+            enable_cb.stateChanged.connect(
+                lambda state, label=enable_label:
+                label.setText("ON" if state else "OFF")
+            )
+            enable_layout.addWidget(enable_label)
+            enable_label.setText("OFF")
+
+
+            vbox.addLayout(enable_layout)
+
+            channel = Channel(
+                voltage=voltage_label, enable_cb=enable_cb, enable_label=enable_label
+            )
+            self.channels.append(channel)
 
         central_widget = QWidget()
         central_widget.setLayout(vbox)
@@ -58,32 +63,27 @@ class DemoInstrumentWindow(QMainWindow):
 
         self.resize(400, 100)
 
-    def changeEnable(self, state):
-        if state:
-            self._enable_label.setText("ON")
-        else:
-            self._enable_label.setText("OFF")
-
     def send(self, fmt, *args, **kwargs):
         self.communicator.send(fmt.format(*args, **kwargs).encode("ascii"))
 
     def on_new_command(self, cmd):
-        args = [arg.decode("ascii") for arg in cmd.split(" ".encode("ascii"))]
+        args = [arg.decode("ascii") for arg in bytes(cmd).split(" ".encode("ascii"))]
 
         if args[0] == "*IDN?":
             self.send("{}\n", self.name)
-        # elif args[0] == "COUNTS?":
-        #     self.send("{}\n", self._counts_widget.value())
-        elif args[0] == "VOLTS?":
+            return
+
+        channel = self.channels[int(args[1])]
+        if args[0] == "VOLTS?":
             # Just so the instrument is consistant it reports in mV too.
-            self.send("{}\n", float(self._voltage_label.value()) * 1000)
+            self.send("{}\n", float(channel.voltage.value()) * 1000)
         elif args[0] == "VOLTS":
             # This command takes mV, but is named and displays V... tricky!
-            self._voltage_label.display(float(args[1]) / 1000)
+            channel.voltage.display(float(args[2]) / 1000)
         elif args[0] == "ENABLE?":
-            self.send("{}\n", "ON" if self._enable_cb.isChecked() else "OFF")
+            self.send("{}\n", "ON" if channel.enable_cb.isChecked() else "OFF")
         elif args[0] == "ENABLE":
-            self._enable_cb.setChecked(args[1] == "ON")
+            channel.enable_cb.setChecked(args[2] == "ON")
         else:
             self.send("ERR\n")
 
@@ -117,9 +117,15 @@ class SocketCommunicator(QObject):
                 self.new_command.emit(cmd.strip())
 
 
-            if self.send_buffer:                
+            if self.send_buffer:
                 self._connection.sendall(self.send_buffer)
                 self.send_buffer = bytes()
+
+        def close(self):
+            self.thread.exit()
+            self.quit()
+            self.exit()
+
 
 
 ## COMMAND MAIN ##############################################################
