@@ -67,17 +67,17 @@ class EpqisDemoInstrument(PowerSupply, SCPIInstrument):
             the command with the neccessary identifier for the channel.
 
             :param str cmd: Command that will be sent to the instrument after
-                being postfixed with the channel identifier
+                being prefixed with the channel identifier
             """
             self._parent.sendcmd("CH{} {}".format(self._idx, cmd))
 
-        def query(self, cmd, *other_args):
+        def query(self, cmd):
             """
             Function used to send a command to the instrument while wrapping
             the command with the neccessary identifier for the channel.
 
             :param str cmd: Command that will be sent to the instrument after
-                being postfixed with the channel identifier
+                being prefixed with the channel identifier
             :return: The result from the query
             :rtype: `str`
             """
@@ -119,7 +119,7 @@ class EpqisDemoInstrument(PowerSupply, SCPIInstrument):
         @voltage.setter
         def voltage(self, newval):
             newval = assume_units(newval, pq.volt).rescale(pq.millivolt).magnitude
-            self.sendcmd("VOLTS", newval)
+            self.sendcmd("VOLTS {}".format(newval))
 
         @property
         def current(self):
