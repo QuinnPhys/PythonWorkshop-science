@@ -72,20 +72,28 @@ class DemoInstrumentWindow(QMainWindow):
         if args[0] == "*IDN?":
             self.send("{}\n", self.name)
             return
+        
+        # NB: 1-indexed, because why be sensible? We *want* people to run into this
+        #     confusion.
+        try:
+            channel = self.channels[int(args[0][2:]) - 1]
+        except:
+            self.send("ERR 1\n")
+            raise
+            return
 
-        channel = self.channels[int(args[1])]
-        if args[0] == "VOLTS?":
+        if args[1] == "VOLTS?":
             # Just so the instrument is consistant it reports in mV too.
             self.send("{}\n", float(channel.voltage.value()) * 1000)
-        elif args[0] == "VOLTS":
+        elif args[1] == "VOLTS":
             # This command takes mV, but is named and displays V... tricky!
             channel.voltage.display(float(args[2]) / 1000)
-        elif args[0] == "ENABLE?":
+        elif args[1] == "ENABLE?":
             self.send("{}\n", "ON" if channel.enable_cb.isChecked() else "OFF")
-        elif args[0] == "ENABLE":
+        elif args[1] == "ENABLE":
             channel.enable_cb.setChecked(args[2] == "ON")
         else:
-            self.send("ERR\n")
+            self.send("ERR 2\n")
 
 
 class SocketCommunicator(QObject):
