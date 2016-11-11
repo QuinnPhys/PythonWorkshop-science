@@ -8,7 +8,8 @@ import sys
 from collections import namedtuple
 
 import click
-from PyQt4.QtCore import QCoreApplication, QFile, QObject, QThread, QTimer, pyqtSignal
+from PyQt4.QtCore import (QCoreApplication, QFile, QObject, QThread, QTimer, 
+                          pyqtSignal)
 from PyQt4.QtGui import (QApplication, QCheckBox, QDialog, QFont, QHBoxLayout,
                          QLabel, QLCDNumber, QMainWindow, QProgressBar,
                          QVBoxLayout, QWidget)
@@ -19,6 +20,7 @@ Channel = namedtuple('Channel', ['voltage', 'enable_cb', 'enable_label'])
 class DemoInstrumentWindow(QMainWindow):
     name = "EPQIS16 Demonstration Instrument"
     communicator = None
+    thread = None
     channels = []
 
     def __init__(self, parent=None):
@@ -72,7 +74,7 @@ class DemoInstrumentWindow(QMainWindow):
         if args[0] == "*IDN?":
             self.send("{}\n", self.name)
             return
-        
+
         # NB: 1-indexed, because why be sensible? We *want* people to run into this
         #     confusion.
         try:
@@ -95,6 +97,12 @@ class DemoInstrumentWindow(QMainWindow):
         else:
             self.send("ERR 2\n")
 
+    def closeEvent(self, event):
+        print('demo_instrument is closing.')
+        self.communicator.active = False
+        self.thread.quit()
+        self.thread.wait()
+
 
 class SocketCommunicator(QObject):
     def __init__(self, connection, parent=None):
@@ -104,14 +112,14 @@ class SocketCommunicator(QObject):
     new_command = pyqtSignal(str if sys.version_info.major <= 2 else bytes)
     recv_buffer = bytes()
     send_buffer = bytes()
-    running = True
+    active = True
 
     def send(self, data):
         self.send_buffer += data
         print(self.send_buffer)
 
     def loop(self):
-        while self.running:
+        while self.active:
             try:
                 self.recv_buffer += self._connection.recv(1024)
             except socket.timeout:
@@ -129,10 +137,12 @@ class SocketCommunicator(QObject):
                 self._connection.sendall(self.send_buffer)
                 self.send_buffer = bytes()
 
-        def close(self):
-            self.thread.exit()
-            self.quit()
-            self.exit()
+            if not self.active:
+                continue
+        # def close(self):
+        #     self.thread.exit()
+        #     self.quit()
+        #     self.exit()
 
 
 
@@ -189,6 +199,7 @@ def demo_instrument(port):
     socket_communicator.new_command.connect(root.on_new_command)
 
     root.communicator = socket_communicator
+    root.thread = socket_thread
 
     QTimer.singleShot(0, socket_thread.start)
 
