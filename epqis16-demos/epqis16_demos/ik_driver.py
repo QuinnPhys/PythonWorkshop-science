@@ -9,8 +9,6 @@ Provides support for the epqis16 Demonstration Instrument.
 from __future__ import absolute_import
 from __future__ import division
 
-#from enum import IntEnum
-
 import quantities as pq
 
 from instruments.abstract_instruments import (
@@ -20,11 +18,12 @@ from instruments.abstract_instruments import (
 
 from instruments.util_fns import assume_units, ProxyList, bool_property
 from instruments.generic_scpi import SCPIInstrument
+
 # CLASSES #####################################################################
 
-class EpqisDemo(PowerSupply, SCPIInstrument):
+class EpqisDemoInstrument(PowerSupply, SCPIInstrument):
     """
-    The EpqisDemo is a single channel DC power supply with an on/off button and
+    The EpqisDemoInstrument is a single channel DC power supply with an on/off button and
     display of the voltage. It is written with the PyQt5 which launces a GUI on
     your computer and listens over a optionally specified port.
 
@@ -41,22 +40,23 @@ class EpqisDemo(PowerSupply, SCPIInstrument):
     _channel_count = 4
 
     def __init__(self, filelike):
-        super(EpqisDemo, self).__init__(filelike)
+        super(EpqisDemoInstrument, self).__init__(filelike)
 
     # INNER CLASSES #
 
     class Channel(PowerSupplyChannel):
 
         """
-        Class representing a channel on the EpqisDemo.
+        Class representing a channel on the EpqisDemoInstrument.
 
         This class inherits from `PowerSupplyChannel`.
 
         .. warning:: This class should NOT be manually created by the user. It
-            is designed to be initialized by the `EpqisDemo` class.
+            is designed to be initialized by the `EpqisDemoInstrument` class.
         """
 
-        def __init__(self, idx):
+        def __init__(self, parent, idx):
+            self._parent = parent
             self._idx = idx + 1
 
         # COMMUNICATION METHODS #
@@ -67,9 +67,9 @@ class EpqisDemo(PowerSupply, SCPIInstrument):
             the command with the neccessary identifier for the channel.
 
             :param str cmd: Command that will be sent to the instrument after
-                being postfixed with the channel identifier
+                being prefixed with the channel identifier
             """
-            self.sendcmd(cmd.format(self=self))
+            self._parent.sendcmd("CH{} {}".format(self._idx, cmd))
 
         def query(self, cmd):
             """
@@ -77,11 +77,11 @@ class EpqisDemo(PowerSupply, SCPIInstrument):
             the command with the neccessary identifier for the channel.
 
             :param str cmd: Command that will be sent to the instrument after
-                being postfixed with the channel identifier
+                being prefixed with the channel identifier
             :return: The result from the query
             :rtype: `str`
             """
-            return self.query(cmd.format(self=self))
+            return self._parent.query("CH{} {}".format(self._idx, cmd))
 
         # PROPERTIES #
         @property
@@ -113,13 +113,13 @@ class EpqisDemo(PowerSupply, SCPIInstrument):
 
             :type: `float`
             """
-            value = self.sendcmd('VOLTS? {self._idx}')
-            return assume_units(value, pq.millivolt).rescale(pq.volt)
+            value = self.query("VOLTS?")
+            return assume_units(float(value), pq.millivolt).rescale(pq.volt)
 
         @voltage.setter
         def voltage(self, newval):
             newval = assume_units(newval, pq.volt).rescale(pq.millivolt).magnitude
-            self.sendcmd('VOLTS {{self._idx}} {}'.format(newval))
+            self.sendcmd("VOLTS {}".format(newval))
 
         @property
         def current(self):
@@ -135,7 +135,7 @@ class EpqisDemo(PowerSupply, SCPIInstrument):
                                       'or setting the output current.')
 
         output = bool_property(
-            "ENABLE {self._idx}",
+            "ENABLE",
             inst_true="ON",
             inst_false="OFF",
             doc="""
@@ -147,16 +147,6 @@ class EpqisDemo(PowerSupply, SCPIInstrument):
             """
         )
 
-    # ENUMS #
-
-    # class Mode(Enum):
-    #     """
-    #     Enum containing valid output modes for the EpqisDemo
-    #     """
-    #     off = 'OFF'
-    #     on = 'ON'
-
-
     # PROPERTIES #
     @property
     def channel(self):
@@ -164,12 +154,12 @@ class EpqisDemo(PowerSupply, SCPIInstrument):
         Gets a specific channel object. The desired channel is specified like
         one would access a list.
 
-        :rtype: `EpqisDemo.Channel`
+        :rtype: `EpqisDemoInstrument.Channel`
 
         .. seealso::
-            `EpqisDemo` for example using this property.
+            `EpqisDemoInstrument` for example using this property.
         """
-        return ProxyList(self, EpqisDemo.Channel, range(self._channel_count))
+        return ProxyList(self, EpqisDemoInstrument.Channel, range(self._channel_count))
 
     @property
     def voltage(self):

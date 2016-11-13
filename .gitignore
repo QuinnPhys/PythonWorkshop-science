@@ -1,8 +1,9 @@
 # LaTeX
-examples/latex/*.out
 examples/latex/*.pdf
-examples/latex/*.synctex.gz
-examples/latex/*.aux
+*.out
+*.synctex.gz
+*.aux
+
 
 # Sublime workspace
 *.sublime-workspace

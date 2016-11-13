@@ -1,0 +1,249 @@
+%!TEX program=xelatex
+% This cheatsheet is based on the template
+% provided at https://gist.github.com/alexander-yakushev/c773543bf9a957749f79.
+\documentclass[10pt,english,landscape]{article}
+\usepackage{multicol}
+\usepackage{calc}
+\usepackage[landscape]{geometry}
+\usepackage{color,graphicx,overpic}
+
+% https://tex.stackexchange.com/a/192067
+\usepackage{fontawesome}
+\usepackage[otf]{sourcecodepro}
+  % \setmonofont{Source Code Pro}
+% \newcommand{\faWindows}{\FA\symbol{"F17A}}
+% \newcommand{\faLinux}{\FA\symbol{"F17C}}
+% \newcommand{\faApple}{\FA\symbol{"F179}}
+
+% \usepackage[T1]{fontenc}
+% \usepackage[bitstream-charter]{mathdesign}
+\usepackage[utf8]{inputenc}
+\usepackage{url}
+\usepackage{amsfonts}
+\usepackage{array,booktabs}
+\usepackage{textcomp}
+\usepackage[usenames,dvipsnames,table]{xcolor}
+\usepackage[most]{tcolorbox}
+\usepackage{tabularx}
+\usepackage{multirow}
+\usepackage{colortbl}
+\usepackage{tikz}
+\usepackage{environ}
+
+\usetikzlibrary{calc}
+\pgfdeclarelayer{background}
+\pgfdeclarelayer{foreground}
+\pgfsetlayers{background,main,foreground}
+
+\geometry{top=-0.5cm,left=1cm,right=1cm,bottom=1cm}
+
+\pagestyle{empty} % Turn off header and footer
+
+% \renewcommand\rmdefault{phv} % Arial
+% \renewcommand\sfdefault{phv} % Arial
+
+% Redefine section commands to use less space
+\makeatletter
+\renewcommand{\section}{\@startsection{section}{1}{0mm}%
+  {-1ex plus -.5ex minus -.2ex}%
+  {0.5ex plus .2ex}%x
+  {\normalfont\large\bfseries}}
+\renewcommand{\subsection}{\@startsection{subsection}{2}{0mm}%
+  {-1explus -.5ex minus -.2ex}%
+  {0.5ex plus .2ex}%
+  {\normalfont\normalsize\bfseries}}
+\renewcommand{\subsubsection}{\@startsection{subsubsection}{3}{0mm}%
+  {-1ex plus -.5ex minus -.2ex}%
+  {1ex plus .2ex}%
+  {\normalfont\small\bfseries}}
+\makeatother
+
+\setcounter{secnumdepth}{0} % Don't print section numbers
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0pt plus 0.5ex}
+
+\definecolor{TableHead}{rgb}{0.353, 0.329, 0.667}
+\definecolor{TableRow}{rgb}{0.816, 0.812, 0.902}
+
+\NewEnviron{keys}[1]{
+  % \begin{center}
+  \smallskip
+  \begin{tikzpicture}
+      \rowcolors{1}{}{TableRow}
+      \centering
+      \node (tbl) [inner sep=0pt] {
+        \begin{tabular}{p{3.0cm}p{4.55cm}}
+          \rowcolor{TableHead}
+          \multicolumn{2}{l}{\normalsize\textbf{\color{white}{#1}}}\parbox{0pt}{\rule{0pt}{0.3ex+\baselineskip}}\\
+          \BODY
+          \arrayrulecolor{TableHead}\specialrule{.17em}{0em}{.2em}
+        \end{tabular}};
+      \begin{pgfonlayer}{background}
+        \draw[rounded corners=2pt,top color=TableHead,bottom color=TableHead, draw=white]
+        ($(tbl.north west)-(0,-0.05)$) rectangle ($(tbl.north east)-(0.0,0.15)$);
+        \draw[rounded corners=2pt,top color=TableHead,bottom color=TableHead, draw=white]
+        ($(tbl.south west)-(0.0,-0.11)$) rectangle ($(tbl.south east)-(-0.0,-0.02)$);
+      \end{pgfonlayer}
+    \end{tikzpicture}
+  % \end{center}
+}
+
+% https://tex.stackexchange.com/a/102523
+\newcommand{\forceindent}[1]{\leavevmode{\parindent=#1\indent}}
+
+\begin{document}
+
+\raggedright\
+
+\begin{center}
+  \Large{\underline{Python Workshop Cheatsheet}}
+\end{center}
+
+\footnotesize
+\begin{multicols}{3}
+
+  \centering\section{Command Line}
+
+  \begin{keys}{Basics}
+    Change directory    & \texttt{cd \emph{dirname}} \\
+    Go to home & \texttt{cd \textasciitilde} \\
+    Go up one dir. & \texttt{cd ..} \\
+    List files          & \texttt{ls} \\
+    List files (incl hidden) & \texttt{ls -a} \\
+    Print working dir. & \texttt{pwd} \\
+    Make new directory & \texttt{mkdir \emph{dirname}} \\
+    Remove empty dir. & \texttt{rmdir} \\
+    Remove files & \texttt{rm \emph{filename}} \\
+    Remove files and\newline directories & \texttt{rm -r \emph{filename}} \\
+    Find path for\newline command & \texttt{which \emph{cmd}}\hfill\faLinux \faApple \\
+                          & \texttt{Get-Command \emph{cmd}}\hfill\faWindows \\
+    Show file contents & \texttt{cat \emph{file}} \\
+    Show long file & \texttt{less \emph{file}}\hfill\faLinux\faApple \\
+    & \texttt{more \emph{file}}\hfill\faWindows \\
+    Show manual & \texttt{man \emph{cmd}} \\
+    Show online help & \texttt{Get-Help -Online \emph{cmd}} \\
+  \end{keys}
+
+  \begin{keys}{SSH}
+    a & \texttt{todo} \\
+  \end{keys}
+
+  \begin{keys}{Git}
+    Clone repo & \texttt{git clone \emph{url}} \\
+    Show status & \texttt{git status} \\
+    Stage file & \texttt{git add \emph{file}} \\
+    Unstage file & \texttt{git reset \emph{file}} \\
+    Commit staged\newline changes & \texttt{git commit -m ''\emph{message}''} \\
+    Change branch & \texttt{git checkout \emph{branch}} \\
+    New branch & \texttt{git checkout -b \emph{branch}} \\
+    Push current branch & \texttt{git push} \\
+    Pull current branch & \texttt{git pull} \\
+    Discard changes in file & \texttt{git checkout -{}- \emph{file}} \\
+    Stash current changes & \texttt{git stash} \\
+    Apply previous stash & \texttt{git stash apply} \\
+  \end{keys}
+
+  \begin{keys}{Package Management}
+    Install OS pkg & \texttt{sudo apt-get install \emph{pkg}}\hfill\faLinux \\
+                       & \texttt{choco install \emph{pkg}}\hfill\faWindows \\
+    Install Anaconda pkg & \texttt{conda install \emph{pkg}} \\
+    Install Python pkg & \texttt{pip install \emph{pkg}} \\
+  \end{keys}
+
+  \columnbreak%\
+
+  \centering\section{Python Language}
+
+  \begin{keys}{Built-in Types}
+    Strings                            & \texttt{str} \\
+    Numeric types                      & \texttt{int} and \texttt{float} \\
+    Boolean                            & \texttt{bool}, \texttt{True} and \texttt{False} \\
+    Lists                              & \texttt{list} and \texttt{[]} \\
+    Tuples                             & \texttt{tuple} and \texttt{()} \\
+    Dictionaries                       & \texttt{dict} and \texttt{\{\}} \\
+  \end{keys}
+
+  \begin{keys}{Definitions}
+    Functions & \texttt{def \emph{fn}(\emph{arg}, \emph{kwarg}=\emph{default}):}\newline
+                \texttt{\forceindent{2em}\emph{body}} \\
+    Classes & \texttt{class \emph{Name}(\emph{bases}):}\newline
+              \texttt{\forceindent{2em}\emph{body}} \\
+  \end{keys}
+
+  \begin{keys}{Flow Control}
+    Conditional                        & \texttt{if \emph{cond}:}\newline\texttt{\forceindent{2em}\emph{body}} \\
+    For-each loop                      & \texttt{for \emph{var} in \emph{iterable}:}\newline
+                                         \texttt{\forceindent{2em}\emph{body}} \\
+    Do-while                           & \texttt{while \emph{cond}:}\newline\texttt{\forceindent{2em}\emph{body}} \\
+    Context manager                    & \texttt{with \emph{manager} as \emph{var}:}\newline\texttt{\forceindent{2em}\emph{body}} \\
+  \end{keys}
+
+  \begin{keys}{Comprehensions}
+    List comp. & \texttt{[\emph{expr} for \emph{var} in \emph{iterable}]} \\
+    Dict. comp. & \texttt{\{\emph{k}: \emph{v} for \emph{var} in \emph{iterable}\}} \\
+  \end{keys}
+
+  \begin{keys}{Iterator Examples}
+    \texttt{range} & \texttt{list(range(3))}\newline~$\to$\texttt{[0, 1, 2]} \\
+    \texttt{zip} & \texttt{list(zip("ab", "AB"))}\newline~$\to$ \texttt{[("a", "A"), ("b", "B")]} \\
+    \texttt{enumerate} & \texttt{list(enumerate("ab"))}\newline~$\to$ \texttt{[(0, "a"), (1, "b")]} \\
+    \texttt{itertools.product} & \texttt{list(product(range(2), "AB"))}
+                                 \newline~$\to$\texttt{[(0, "A"), (0, "B"), \dots]}\\
+  \end{keys}
+
+  \begin{keys}{PEP8 Names}
+    Functions, variables, etc. & \texttt{snake\_case} \\
+    Clases, types, etc. & \texttt{CamelCase} \\
+    Constants & \texttt{SHOUTY\_CASE} \\
+  \end{keys}
+
+  \columnbreak%\
+
+  \centering\section{NumPy}
+
+  \begin{keys}{\texttt{import numpy as np}}
+    New array & \texttt{np.array([\emph{\dots}])} \\
+    Index     & \texttt{\emph{arr}[0]} \hfill(1D, scalar)\newline
+                \texttt{\emph{arr}[\emph{start}:\emph{end}]} \hfill(1D, slice)\newline
+                \texttt{\emph{arr}[\emph{ax0}, \emph{ax1}, \dots]}\hfill(multidim)\newline
+                \texttt{\emph{arr}[np.newaxis]}\hfill(new axis) \\
+    Transpose & \texttt{\emph{arr}.T} or \newline
+                \texttt{\emph{arr}.transpose(\emph{axes})} \\
+    Reshape   & \texttt{\emph{arr}.reshape(\emph{new\_shape})} \\
+    Reduce    & \texttt{\emph{arr}.sum(axis=\emph{axes})} or \newline
+                \texttt{\emph{arr}.mean(axis=\emph{axes})}, etc. \\
+  \end{keys}
+
+  \centering\section{Plotting}
+
+  \begin{keys}{\texttt{import matplotlib.pyplot as plt}}
+    Plot & \texttt{plt.plot(\emph{xs}, \emph{ys}, '\emph{style}', \newline\forceindent{1em}label=\emph{label})} \\
+    Axis labels & \texttt{plt.xlabel(\dots)} and \texttt{plt.ylabel(\dots)} \\
+    Axis limits & \texttt{plt.xlim}  and \texttt{plt.ylim} \\
+    Plot title & \texttt{plt.title(\dots)} \\
+    Legend & \texttt{plt.legend()} \\
+  \end{keys}
+
+
+  \centering\section{IPython / Jupyter}
+
+  \begin{keys}{Magic Commands}
+    Meas. execution\newline time & \texttt{\%timeit \emph{stmt}} \\
+    Navigate dirs. & \texttt{\%cd \emph{dirname}, \%pwd, \%ls} \\
+    Inline plotting (NB) & \texttt{\%matplotlib inline} \\
+    Help on symbol & \texttt{\emph{name}?} \hfill(short)\newline \texttt{\emph{name}??} \hfill(complete) \\
+  \end{keys}
+
+  \begin{keys}{Notebook Shortcut Keys}
+    Run current cell & \textbf{Shift + Enter} \\
+    New cell above & \textbf{Esc}, \textbf{A} \\
+    New cell below & \textbf{Esc}, \textbf{B} \\
+    Delete current cell & \textbf{Esc}, \textbf{D}, \textbf{D} \\
+    Change cell to\newline Markdown & \textbf{Esc}, \textbf{M} \\
+    Comment/uncomment & \textbf{Ctrl + /} \\
+    Show all shortcuts & \textbf{Esc}, \textbf{H} \\
+  \end{keys}
+
+\end{multicols}
+
+\end{document}

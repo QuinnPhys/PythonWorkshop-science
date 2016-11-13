@@ -3,7 +3,7 @@ from setuptools import setup
 setup(
     name='epqis16_demos',
     version='0.1',
-    py_modules=['epqis16_demos'],
+    packages=['epqis16_demos'],
     install_requires=[
         'Click',
     ],
