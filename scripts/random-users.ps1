@@ -5,7 +5,8 @@ param(
     [string] $BaseName="epqistmp",
     [int] $Number = 40,
     [string] $JobName = "password-tickets",
-    [string] $OutputDirectory = "."
+    [string] $OutputDirectory = ".",
+    [string] $DefaultShell = "/bin/bash"
 )
 
 function New-RandomUser {
@@ -14,7 +15,8 @@ function New-RandomUser {
         [Parameter(ValueFromPipeline)]
         [string] $UserName,
 
-        [int] $Length = 12
+        [int] $Length = 12,
+        [string] $DefaultShell = "/bin/bash"
     );
 
     process {
@@ -26,13 +28,20 @@ function New-RandomUser {
             if (-not $?) {
                 throw [System.Exception] "useradd failed."
             }
+
             echo ${UserName}:${password} | chpasswd
             if (-not $?) {
                 throw [System.Exception] "chpasswd failed."
             }
+
+            chsh $UserName -s $DefaultShell
+            if (-not $?) {
+                throw [System.Exception] "chsh failed."
+            }
         } else {
             Write-Host "useradd" $UserName --create-home
             Write-Host "echo" ${UserName}:${password} "| chpasswd"
+            Write-Host "chsh $UserName -s $DefaultShell"
         }
 
         Write-Output (New-Object -TypeName psobject -Prop (@{ UserName = $UserName; Password = $password }));
