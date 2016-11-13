@@ -1,20 +1,35 @@
+#!/usr/bin/env powershell
+
+[cmdletbinding(SupportsShouldProcess=$true,ConfirmImpact="High")]
+param(
+    [string] $BaseName="epqistmp",
+    [int] $Number = 40,
+    [string] $JobName = "password-tickets",
+    [string] $OutputDirectory = "."
+)
+
 function New-RandomUser {
+    [cmdletbinding(SupportsShouldProcess=$true,ConfirmImpact="High")]
     param(
         [Parameter(ValueFromPipeline)]
         [string] $UserName,
 
-        [int] $Length = 12,
-
-        [switch] $WhatIf
+        [int] $Length = 12
     );
 
     process {
 
         $password = apg -a 1 -n 1 -MLCN -m $Length -x $Length
 
-        if (-not $WhatIf) {
+        if ($PSCmdlet.ShouldProcess((hostname), "Create new user $UserName")) {
             useradd $UserName --create-home
+            if (-not $?) {
+                throw [System.Exception] "useradd failed."
+            }
             echo ${UserName}:${password} | chpasswd
+            if (-not $?) {
+                throw [System.Exception] "chpasswd failed."
+            }
         } else {
             Write-Host "useradd" $UserName --create-home
             Write-Host "echo" ${UserName}:${password} "| chpasswd"
@@ -60,7 +75,8 @@ function Format-UsersAsLaTeX {
     begin {
         Write-Output @"
 \documentclass{article}
-\usepackage{mathpazo}
+\usepackage{fontspec}
+    \setmainfont{Palatino Linotype}
 \usepackage{sourcecodepro}
 \usepackage[flashCard,circlemark]{ticket}
 
@@ -89,4 +105,5 @@ function Format-UsersAsLaTeX {
 
 }
 
-Get-UserNames -BaseName epqistmp -Number 40 | New-RandomUser | Format-UsersAsLaTeX | xelatex -job-name=password-tickets
+$conf = @{ Confirm = $ConfirmPreference -eq "High" }
+Get-UserNames -BaseName $BaseName -Number $Number | New-RandomUser @conf | Format-UsersAsLaTeX | xelatex -jobname="$JobName" -output-directory="$OutputDirectory"
