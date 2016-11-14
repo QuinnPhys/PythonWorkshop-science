@@ -25,26 +25,26 @@ Two-day workshop as an introduction to Python for scientific computing. Please b
 ### Thursday ###
 
 - [**Tools for Scientific Computing 0**](https://nbviewer.jupyter.org/github/QuinnPhys/PythonWorkshop-science/blob/master/lecture-0-scicomp-tools-part0.ipynb)
-    - Using the command line (PowerShell and bash)
-    - Package management for Linux and Windows
-    - Using modern text editors
-    - Installing Python and additional packages
+    - Learn what a **shell** is and how to interact with the **command line**
+    - Install and learn about **package managers** 
+    - Install and explore two great examples of **modern text editors**
+    - Install and set up **Python** for the following lectures
 
 - [**Tools for Scientific Computing 1**](https://nbviewer.jupyter.org/github/QuinnPhys/PythonWorkshop-science/blob/master/lecture-1-scicomp-tools-part1.ipynb)
-    - Secure shell (SSH) for remote and HPC computing
-    - Version control with Git
+    - **Secure shell** (SSH) for remote and HPC computing
+    - Version control with **Git**
    
 - [**Python for General Use**](https://nbviewer.jupyter.org/github/QuinnPhys/PythonWorkshop-science/blob/master/lecture-2-python-general.ipynb)
-    - Introduction to the Python language
-    - Using the Python interactive interpreter
+    - Introduction to the **Python** language via an interactive intrepreter
+    - Learn about **types, indexing, functions, and classes** in Python
     - Python 2 vs. 3
-    - Using Jupyter Notebook
-    - Stylistic guidelines for keeping collaborators happy (incl. future you)
+    - **Stylistic guidelines** for keeping collaborators happy (incl. future you)
+    - Learn about codeing interface called *Jupyter Notebook*
 
 - [**Python for Scientific Computing**](https://nbviewer.jupyter.org/github/QuinnPhys/PythonWorkshop-science/blob/master/lecture-3-python-scicomp.ipynb)
-    - NumPy/SciPy
-    - Pandas
-    - Matplotlib and Seaborn
+    - Storing, representing, and manipulating tensors of numeric data with the **NumPy** and **SciPy** packages
+    - R-style data analysis with the **Pandas** package
+    - publication-quality plotting and with **Matplotlib**, and statistics plotting with **Seaborn**
 
 ### Friday ###
 
