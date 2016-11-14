@@ -39,7 +39,7 @@ Two-day workshop as an introduction to Python for scientific computing. Please b
     - Learn about **types, indexing, functions, and classes** in Python
     - Python 2 vs. 3
     - **Stylistic guidelines** for keeping collaborators happy (incl. future you)
-    - Learn about codeing interface called *Jupyter Notebook*
+    - Learn about coding interface called *Jupyter Notebook*
 
 - [**Python for Scientific Computing**](https://nbviewer.jupyter.org/github/QuinnPhys/PythonWorkshop-science/blob/master/lecture-3-python-scicomp.ipynb)
     - Storing, representing, and manipulating tensors of numeric data with the **NumPy** and **SciPy** packages
@@ -48,18 +48,27 @@ Two-day workshop as an introduction to Python for scientific computing. Please b
 
 ### Friday ###
 
-- [**Data Analysis with QInfer**](https://nbviewer.jupyter.org/github/QuinnPhys/PythonWorkshop-science/blob/master/lecture-4-qinfer.ipynb)
+- [**Open Quantum Systems Simulation with QuTiP**](https://nbviewer.jupyter.org/github/QuinnPhys/PythonWorkshop-science/blob/master/lecture-4-qutip.ipynb)
+    - Install and configure compilers for use with Python
+    - Install **QuTiP** and learn how to represent **quantum states, measurements, unitaries,** and **superoperators**
+    - Use QuTiP to examine properties of **norms**
+    - See an example of *unit testing* in action
 
-- [**Open Quantum Systems Simulation with QuTiP**](https://nbviewer.jupyter.org/github/QuinnPhys/PythonWorkshop-science/blob/master/lecture-5-qutip.ipynb)
+- [**Data Analysis with QInfer**](https://nbviewer.jupyter.org/github/QuinnPhys/PythonWorkshop-science/blob/master/lecture-5-qinfer.ipynb)
+    - Estimate the bias of a classical coin
+    - Learn how to use QInfer to perform:
+        - **quantum state tomography**
+        - **phase estimation**
+        - **randomized benchmarking**
+    - Specify **custom models** to use with QInfer
 
 - [**Instrument Control with InstrumentKit**](https://nbviewer.jupyter.org/github/QuinnPhys/PythonWorkshop-science/blob/master/lecture-6-python-instrument-control.ipynb)
-    - Unitful computing with Pint and python-quantities
-    - Using class inheritance to model instrument functionality
-    - Writing custom instrument drivers
-    - Unit testing to ensure correct operation
+    - Learn about **unit support** for calculations in Python via two packages (Quantities and Pint)
+    - Go deeper into **classes** in Python and how they can be useful for designing interfaces to communicate to instruments
+    - **Design a driver** for a demo instrument 
     
 - [**Interoperability with Modern and Legacy Environments**](https://nbviewer.jupyter.org/github/QuinnPhys/PythonWorkshop-science/blob/master/lecture-7-interoperability.ipynb)
-
+    - Connecting Python to C, MATLAB, and Julia
 ## Before the Workshop ##
 
 - Please help us save time by downloading the following files, depending on your operating system.

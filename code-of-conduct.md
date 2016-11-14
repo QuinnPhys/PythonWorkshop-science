@@ -21,16 +21,16 @@ Harassment includes, but is not limited to:
 - Sustained disruption of talks or other events
 - Inappropriate physical contact
 - Unwelcome sexual attention
-- Advocating for, or encouraging, any of the above behaviour 
+- Advocating for, or encouraging, any of the above behavior 
 
 Participants asked to stop any harassing behavior are expected to comply immediately.
 
-If a participant engages in harassing behaviour, event organisers retain the
+If a participant engages in harassing behavior, event organizers retain the
 right to take any actions to keep the workshop a welcoming environment for all
 participants. This includes warning the offender or expulsion from the
 workshop.
 
-Workshop organisers may take action to redress anything designed to, or with
+Workshop organizers may take action to redress anything designed to, or with
 the clear impact of, disrupting the event or making the environment hostile
 for any participants.
 
