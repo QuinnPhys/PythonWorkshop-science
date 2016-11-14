@@ -68,7 +68,8 @@ Two-day workshop as an introduction to Python for scientific computing. Please b
     - **Design a driver** for a demo instrument 
     
 - [**Interoperability with Modern and Legacy Environments**](https://nbviewer.jupyter.org/github/QuinnPhys/PythonWorkshop-science/blob/master/lecture-7-interoperability.ipynb)
-    - Connecting Python to C, MATLAB, and Julia
+    - Connecting Python to **C, MATLAB,** and **Julia**
+
 ## Before the Workshop ##
 
 - Please help us save time by downloading the following files, depending on your operating system.
