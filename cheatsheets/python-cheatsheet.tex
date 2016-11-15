@@ -72,7 +72,7 @@
       \rowcolors{1}{}{TableRow}
       \centering
       \node (tbl) [inner sep=0pt] {
-        \begin{tabular}{p{3.0cm}p{4.55cm}}
+        \begin{tabular}{p{2.9cm}p{4.65cm}}
           \rowcolor{TableHead}
           \multicolumn{2}{l}{\normalsize\textbf{\color{white}{#1}}}\parbox{0pt}{\rule{0pt}{0.3ex+\baselineskip}}\\
           \BODY
@@ -114,19 +114,21 @@
     Make new directory & \texttt{mkdir \emph{dirname}} \\
     Remove empty dir. & \texttt{rmdir} \\
     Remove files & \texttt{rm \emph{filename}} \\
-    Remove files and\newline directories & \texttt{rm -r \emph{filename}} \\
+    Remove files and\newline directories & \texttt{rm -r \emph{filename}}\hfill\faWarning \\
     Find path for\newline command & \texttt{which \emph{cmd}}\hfill\faLinux \faApple \\
                           & \texttt{Get-Command \emph{cmd}}\hfill\faWindows \\
     Show file contents & \texttt{cat \emph{file}} \\
     Show long file & \texttt{less \emph{file}}\hfill\faLinux\faApple \\
     & \texttt{more \emph{file}}\hfill\faWindows \\
     Show manual & \texttt{man \emph{cmd}} \\
-    Show online help & \texttt{Get-Help -Online \emph{cmd}} \\
+    Show online help & \texttt{Get-Help -Online \emph{cmd}}\hfill\faWindows \\
+    Write to file & \texttt{echo ''\emph{contents}'' > \emph{file}}\hfill\faLinux \faApple \\
+                  & \texttt{sc \emph{file} -Value ''\emph{contents}''}\hfill\faWindows \\
   \end{keys}
 
-  \begin{keys}{SSH}
-    a & \texttt{todo} \\
-  \end{keys}
+  % \begin{keys}{SSH}
+  %   a & \texttt{todo} \\
+  % \end{keys}
 
   \begin{keys}{Git}
     Clone repo & \texttt{git clone \emph{url}} \\
