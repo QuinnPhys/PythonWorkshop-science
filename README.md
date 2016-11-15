@@ -35,7 +35,7 @@ Two-day workshop as an introduction to Python for scientific computing. Please b
     - Version control with **Git**
    
 - [**Python for General Use**](https://nbviewer.jupyter.org/github/QuinnPhys/PythonWorkshop-science/blob/master/lecture-2-python-general.ipynb)
-    - Introduction to the **Python** language via an interactive intrepreter
+    - Introduction to the **Python** language via an interactive interpreter
     - Learn about **types, indexing, functions, and classes** in Python
     - Python 2 vs. 3
     - **Stylistic guidelines** for keeping collaborators happy (incl. future you)
