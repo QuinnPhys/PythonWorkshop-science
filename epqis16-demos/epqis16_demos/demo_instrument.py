@@ -129,7 +129,7 @@ class SocketCommunicator(QObject):
                     raise
 
             if bytes("\n".encode("ascii")) in self.recv_buffer:
-                cmd, self.recv_buffer = self.recv_buffer.split("\n".encode("ascii"), 2)
+                cmd, self.recv_buffer = self.recv_buffer.split("\n".encode("ascii"), 1)
                 self.new_command.emit(cmd.strip())
 
 
