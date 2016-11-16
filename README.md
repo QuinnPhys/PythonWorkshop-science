@@ -80,11 +80,11 @@ Two-day workshop as an introduction to Python for scientific computing. Please b
     - OS X 10.7 or later
         - [Anaconda 4 for Python 3.5](https://repo.continuum.io/archive/Anaconda3-4.2.0-MacOSX-x86_64.pkg)
         - [Sublime Text 3](https://download.sublimetext.com/Sublime%20Text%20Build%203126.dmg)
-        - [VS Code 1.7.1](https://go.microsoft.com/fwlink/?LinkID=760868)
+        - [VS Code 1.7.1](https://go.microsoft.com/fwlink/?LinkID=534106)
     - Ubuntu 16.04
         - [Anaconda 4 for Python 3.5](https://repo.continuum.io/archive/Anaconda3-4.2.0-Linux-x86_64.sh)
         - [Sublime Text 3](https://download.sublimetext.com/sublime-text_build-3126_amd64.deb)
-        - [VS Code 1.7.1](https://go.microsoft.com/fwlink/?LinkID=620882)
+        - [VS Code 1.7.1](http://go.microsoft.com/fwlink/?LinkID=760868)
 
 ## Additional Resources ##
 
