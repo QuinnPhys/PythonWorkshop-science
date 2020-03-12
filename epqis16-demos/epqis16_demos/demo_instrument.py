@@ -8,11 +8,13 @@ import sys
 from collections import namedtuple
 
 import click
-from PyQt4.QtCore import (QCoreApplication, QFile, QObject, QThread, QTimer, 
+from PyQt5.QtCore import (QCoreApplication, QFile, QObject, QThread, QTimer, 
                           pyqtSignal)
-from PyQt4.QtGui import (QApplication, QCheckBox, QDialog, QFont, QHBoxLayout,
+from PyQt5.QtWidgets import ( QApplication, QWidget,QCheckBox, QDialog,  QHBoxLayout,
                          QLabel, QLCDNumber, QMainWindow, QProgressBar,
-                         QVBoxLayout, QWidget)
+                         QVBoxLayout)
+from PyQt5.QtGui import (  QFont)
+
 
 Channel = namedtuple('Channel', ['voltage', 'enable_cb', 'enable_label'])
 
